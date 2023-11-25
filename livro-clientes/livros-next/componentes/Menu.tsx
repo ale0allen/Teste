@@ -1,27 +1,25 @@
+// Menu.tsx
+
+import React from 'react';
 import Link from 'next/link';
 
-export const Menu: React.FC = () => {
+const Menu: React.FC = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <Link href="/">
-          <a className="navbar-brand">Loja Next</a>
+        <Link href="/" className="navbar-brand">
+          Home
         </Link>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav">
+        <div className="collapse navbar-collapse">
+          <ul className="navbar-nav mr-auto">
             <li className="nav-item">
-              <Link href="/">
-                <a className="nav-link">Página Inicial</a>
+              <Link href="/LivroLista" className="nav-link">
+                Lista de Livros
               </Link>
             </li>
             <li className="nav-item">
-              <Link href="/livros">
-                <a className="nav-link">LivroLista</a>
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link href="/livro-dados">
-                <a className="nav-link">LivroDados</a>
+              <Link href="/LivroDados" className="nav-link">
+                Dados do Livro
               </Link>
             </li>
           </ul>
@@ -30,3 +28,5 @@ export const Menu: React.FC = () => {
     </nav>
   );
 };
+
+export default Menu;

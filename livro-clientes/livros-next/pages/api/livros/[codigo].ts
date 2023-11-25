@@ -1,18 +1,19 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import ControleLivros from '../../../classes/controle/ControleLivros';
+// pages/api/livros/[codigo].ts
 
-const controleLivro = new ControleLivros(); // Instancie o controle de livros
+import { NextApiRequest, NextApiResponse } from 'next';
+import ControleLivros from '@/classes/controle/ControleLivros';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'DELETE') {
     try {
-      const codigo = Number(req.query.codigo);
-      ControleLivros.excluir(codigo);
+      const codigoLivro = String(req.query.codigo);
+      const controleLivros = new ControleLivros();
+      controleLivros.excluir(codigoLivro);
       res.status(200).json({ message: 'Livro excluído com sucesso' });
     } catch (error) {
-      res.status(500).json({ error: 'Erro interno no servidor' });
+      res.status(500).json({ message: 'Erro interno do servidor' });
     }
   } else {
-    res.status(405).json({ error: 'Método não permitido' });
+    res.status(405).json({ message: 'Método não permitido' });
   }
 };

@@ -1,28 +1,71 @@
+// clientes/livros-react/src/controle/ControleLivros.ts
+
 import Livro from '../modelo/Livro';
+import LivroMongo from '../Interface/LivroMongo';
 
-const livros: Livro[] = [
-  new Livro(1, 1, 'Livro 1', 'Resumo do Livro 1', ['Autor 1', 'Autor 2']),
-  new Livro(2, 2, 'Livro 2', 'Resumo do Livro 2', ['Autor 3', 'Autor 4']),
-  new Livro(3, 3, 'Livro 3', 'Resumo do Livro 3', ['Autor 5', 'Autor 6']),
-];
+const baseURL = 'http://localhost:3030/livros';
 
-class ControleLivros {
-  static obterLivros() {
-    return livros;
+class ControleLivro {
+  async obterLivros(): Promise<Array<Livro>> {
+    try {
+      const response = await fetch(baseURL);
+      const livrosMongo: Array<LivroMongo> = await response.json();
+      const livros = livrosMongo.map(livroMongo => {
+        return new Livro(
+          livroMongo._id,
+          livroMongo.codEditora,
+          livroMongo.titulo,
+          livroMongo.resumo,
+          livroMongo.autores,
+        );
+      });
+      return livros;
+    } catch (error) {
+      throw new Error('Erro ao obter os livros: ' + (error as Error).message);
+    }
   }
 
-  static incluir(livro: Livro) {
-    const codigo = Math.max(...livros.map((l) => l.codigo)) + 1;
-    livro.codigo = codigo;
-    livros.push(livro);
+  async incluir(livro: Livro): Promise<boolean> {
+    const url = `${baseURL}`;
+
+    const livroMongo: LivroMongo = {
+      _id: null,
+      titulo: livro.titulo,
+      codEditora: livro.codEditora,
+      resumo: livro.resumo,
+      autores: livro.autores      
+    };
+
+    try {
+      console.error('teste:', livroMongo);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(livroMongo),
+      });
+
+      return response.ok;
+    } catch (error) {
+      console.error('Erro ao incluir livro:', error);
+      return false;
+    }
   }
 
-  static excluir(codigo: number) {
-    const index = livros.findIndex((l) => l.codigo === codigo);
-    if (index !== -1) {
-      livros.splice(index, 1);
+
+  async excluir(codigo: string): Promise<void> {
+    try {
+      const response = await fetch(`${baseURL}/${codigo}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error('Erro ao excluir o livro.');
+      }
+    } catch (error) {
+      throw new Error('Erro ao excluir o livro: ' + (error as Error).message);
     }
   }
 }
 
-export default ControleLivros;
+export default ControleLivro;

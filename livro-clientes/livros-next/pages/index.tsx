@@ -1,28 +1,21 @@
-import Head from 'next/head';
-import {Menu} from '../componentes/Menu';
+// index.tsx
 
-export default function Home() {
+import Head from 'next/head';
+import Menu from '../componentes/Menu';
+import styles from '../styles/Home.module.css';
+
+const Home: React.FC = () => {
   return (
-    <div>
+    <div className={styles.container}>
       <Head>
         <title>Loja Next</title>
       </Head>
-
-      <Menu />
-
-      <main style={styles.main}>
-        <h1 style={styles.title}>Página Inicial</h1>
+      <Menu /> {/* Use the Menu component here */}
+      <main className={styles.main}>
+        <h1>Página Inicial</h1>
       </main>
     </div>
   );
-}
-
-const styles = {
-  main: {
-    padding: '20px',
-  },
-  title: {
-    fontSize: '24px',
-    fontWeight: 'bold',
-  },
 };
+
+export default Home;

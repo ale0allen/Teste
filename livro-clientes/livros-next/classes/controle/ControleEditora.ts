@@ -1,21 +1,21 @@
 import Editora from '../modelo/Editora';
 
-const editoras: Editora[] = [
-  new Editora(1, 'Alta Books'),
-  new Editora(2, 'Bookaman'),
-  new Editora(3, 'Addison Wesley'),
-  new Editora(4, 'Pearson'),
-];
+const editoras: Array<Editora> = [
+    new Editora(1, 'Alta Books'),
+    new Editora(2, 'Pearson'),
+    new Editora(3, 'Addison Wesley'),
+    // Adicione mais editoras aqui, se necessário
+  ];
 
-class ControleEditora {
-  static getEditoras() {
-    return editoras;
+  class ControleEditora {
+    getNomeEditora(codEditora: number): string | undefined {
+      const editoraEncontrada = editoras.find(editora => editora.codEditora === codEditora);
+      return editoraEncontrada ? editoraEncontrada.nome : undefined;
+    }
+  
+    getEditoras(): Array<Editora> {
+      return editoras;
+    }
   }
-
-  static getNomeEditora(codEditora: number) {
-    const editora = editoras.find((e) => e.codEditora === codEditora);
-    return editora ? editora.nome : '';
-  }
-}
-
-export default ControleEditora;
+  
+  export default ControleEditora;

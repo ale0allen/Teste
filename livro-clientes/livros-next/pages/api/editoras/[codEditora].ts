@@ -1,23 +1,19 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import ControleEditora from '../../../classes/controle/ControleEditora'; // Importe o controle de editoras
+// pages/api/editoras/[codEditora].ts
 
-const controleEditora = new ControleEditora(); // Instancie o controle de editoras
+import { NextApiRequest, NextApiResponse } from 'next';
+import ControleEditora from '@/classes/controle/ControleEditora';
 
 export default (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     try {
       const codEditora = Number(req.query.codEditora);
-      const nomeEditora = ControleEditora.getNomeEditora(codEditora);
-
-      if (nomeEditora) {
-        res.status(200).json({ nome: nomeEditora });
-      } else {
-        res.status(404).json({ error: 'Editora não encontrada' });
-      }
+      const controleEditora = new ControleEditora();
+      const nomeEditora = controleEditora.getNomeEditora(codEditora);
+      res.status(200).json({ nome: nomeEditora });
     } catch (error) {
-      res.status(500).json({ error: 'Erro interno no servidor' });
+      res.status(500).json({ message: 'Erro interno do servidor' });
     }
   } else {
-    res.status(405).json({ error: 'Método não permitido' });
+    res.status(405).json({ message: 'Método não permitido' });
   }
 };
