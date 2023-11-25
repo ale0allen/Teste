@@ -13,7 +13,7 @@ export class Livro {
     autores: string[]
   ) {
 
-    this.codigo = null,
+    this.codigo = codigo,
     this.titulo = titulo;
     this.codEditora = codEditora;
     this.resumo = resumo;

@@ -46,7 +46,6 @@ export class ControleLivrosService {
     };
 
     try {
-      console.error('teste:', livroMongo);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -63,7 +62,7 @@ export class ControleLivrosService {
   }
 
   // Alterar o método excluir para comportamento assíncrono
-  async excluir(codigo: String | null): Promise<boolean> {
+  async excluir(codigo: string | null): Promise<boolean> {
     const url = `${baseURL}/${codigo}`;
 
     try {

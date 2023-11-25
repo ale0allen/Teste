@@ -22,7 +22,7 @@ export class LivroListaComponent implements OnInit {
   }
 
   // Alterar a assinatura do método excluir
-  excluir(codigo: String | null): void {
+  excluir(codigo: string | null): void {
     this.controleLivrosService.excluir(codigo)
       .then(() => {
         // Ao final da execução de excluir, chame obterLivros novamente
